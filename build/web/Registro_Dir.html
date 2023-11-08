@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Registro de dirección</title>
+        <script>
+            function validarformularioDir() {
+                var calle = document.getElementById("calle").value.trim();
+                var no_ext = document.getElementById("no_ext").value.trim();
+                var no_int = document.getElementById("no_int").value.trim();
+                var cp = document.getElementById("cp").value.trim();
+                var estado = document.getElementById("estado").value;
+                var municipio = document.getElementById("municipio").value;
+                var colonia = document.getElementById("colonia").value.trim();
+                if (calle === "") {
+                    alert("Por favor ingresa una calle.");
+                    return false;
+                } else
+                if (no_ext === "") {
+                    alert("Por favor ingresa un número exterior.");
+                    return false;
+                } else
+                if (no_int === "") {
+                    alert("Por favor ingresa un número exterior.");
+                    return false;
+                } else
+                if (cp === "") {
+                    alert("Por favor ingresa un código postal.");
+                    return false;
+                } else
+                if (estado === "") {
+                    alert("Por favor selecciona un estado.");
+                    return false;
+                } else
+                if (municipio === "") {
+                    alert("Por favor selecciona un municipio.");
+                    return false;
+                } else
+                if (colonia === "")
+                    alert("Por favor ingrese una colonia");
+                if (cp.length !== 5) {
+                    alert("El código postal debe contener 5 dígitos");
+                } else
+                    return true;
+            }
+            function cambiarMunicipio() {
+                var municipios = {
+                    "EDOMEX": ["Naucalpan", "Toluca", "Cuautitlan Izcalli", "Nezahualcoyotl", "Huixquilucan", "Ecatepec", "Atizapan de Zaragoza", "Tlalnepantla", "Nicolas Romero", "Chimalhuacan", "Texcoco", "Zumpango", "Cuautitlan", "Coacalco de Berriozabal", "La Paz", "Ixtapaluca", "Los Reyes", "Chalco", "Valle de Chalco Solidaridad", "Metepec", "Chicoloapan", "Ocoyoacac", "Nextlalpan", "Amecameca", "Temascalapa", "Tenango del Valle", "Tonanitla", "Otzoloapan", "Tultitlan", "Calimaya", "Melchor Ocampo", "Huehuetoca", "Jilotepec", "Tecamac", "Xonacatlan", "Atenco", "Lerma", "Ixtapan de la Sal", "Temascaltepec", "Jaltenco", "Acambay", "San Felipe del Progreso", "Almoloya del Rio", "Villa Guerrero", "Tepotzotlan", "Rayon", "Toluca de Lerdo", "Otumba", "San Martin de las Piramides", "Tonatico", "Tianguistenco", "Chiconcuac", "Capulhuac", "Zinacantepec", "Tequixquiac", "Texcalyacac", "Teoloyucan", "Tenancingo", "Tepetlaoxtoc", "Jiquipilco", "Villa Nicolas Romero", "Temoaya", "Donato Guerra", "Amatepec", "Soyaniquilpan de Juarez", "Sultepec", "Acolman", "Nezahualpilli", "Chapultepec", "Polotitlan", "Zacazonapan", "Joquicingo", "Temascalcingo", "Almoloya de Juarez", "San Antonio la Isla", "San Mateo Atenco", "Atlacomulco", "Tenango del Aire", "Ocuilan", "Ixtlahuaca", "Luvianos", "Timilpan", "Isidro Fabela", "Villa Victoria", "Coatepec Harinas", "El Oro", "Tenango de Arista", "Santo Tomas", "Santo Domingo de Guzman", "Soyautlan del Oro", "Ixtapan del Oro", "Tlatlaya", "Temamatla", "Xalatlaco", "Texcaltitlan", "Villa de Allende", "Tepetlixpa", "Tlalmanalco", "Zacualpan", "Xalostoc", "Jocotitlan", "Acambay de Ruiz Castaneda", "Almoloya de Alquis"],
+                    "CMX": ["Alvaro Obregon", "Azcapotzalco", "Benito Juarez", "Coyoacan", "Cuajimalpa de Morelos", "Cuauhtemoc", "Gustavo A. Madero", "Iztacalco", "Iztapalapa", "Magdalena Contreras", "Miguel Hidalgo", "Milpa Alta", "Tlahuac", "Tlalpan", "Venustiano Carranza", "Xochimilco"]
+                };
+                var estadoCombo = document.querySelector('#estado');
+                var municipioCombo = document.querySelector('#municipio');
+                var municipiosArray = municipios[estadoCombo.value];
+                municipioCombo.innerHTML = '';
+                for (var i = 0; i < municipiosArray.length; i++) {
+                    var option = document.createElement('option');
+                    option.value = municipiosArray[i];
+                    option.text = municipiosArray[i];
+                    municipioCombo.appendChild(option);
+                }
+            }
+        </script>
+    </head>
+    <body>
+        <h1>Registro de dirección</h1>
+        <form action="Registro_Dir.jsp" method="post" onsubmit="return validarformularioDir()">
+            <label for="calle">Calle:</label>
+            <input type="text" id="calle" name="calle"><br><br>
+
+            <label for="no_ext">No. exterior:</label>
+            <input type="number" id="no_ext" name="no_ext" ><br><br>
+
+            <label for="no_int">No. interior:</label>
+            <input type="number" id="no_int" name="no_int"><br><br>
+
+            <label for="cp">Código postal:</label>
+            <input type="number" id="cp" name="cp"><br><br>
+
+            <label for="cp">Colonia:</label>
+            <input type="text" id="colonia" name="colonia"><br><br>
+
+            <label for="estado">Estado:</label>
+            <select name="estado" id="estado" onchange="cambiarMunicipio()">
+                <option value="" selected disabled>Selecciona un estado</option>
+                <option value="CMX">Ciudad de México</option>
+                <option value="EDOMEX">Estado de México</option>
+            </select>
+            <label for="municipio">Municipio:</label>
+            <select name="municipio" id="municipio"></select>
+            <br><br>
+
+            <input type="submit" value="Guardar">
+        </form>
+    </body>
+</html>

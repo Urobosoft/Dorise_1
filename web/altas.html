@@ -1,0 +1,254 @@
+<html>
+    <head>
+        <title>Registro</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" type="text/css" href="css/logart.css">
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script>
+            function validarFormulario() {
+                var nombre = document.getElementById("nombre").value;
+                var contrasenia = document.getElementById("contrasenia").value;
+                var fecha = document.getElementById("fecha").value;
+                var correo = document.getElementById("correo").value;
+                var cel = document.getElementById("cel").value;
+                var sexo = document.getElementsByName("sexo");
+                var aceptar = document.getElementByName("aceptar");
+                var contraseniaExpresion = /^(?=.*\d)(?=.*[A-Z]).{8,}$/;
+                var correoExpresion = /^\w+([\.-]?\w+)@\w+([\.-]?\w+)(\.\w{2,3})+$/;
+                var celExpresion = /^[0-9]{10}$/;
+                var hoy = new Date();
+                var fechaNacimientoDate = new Date(fecha);
+                var edad = hoy.getFullYear() - fechaNacimientoDate.getFullYear();
+                var m = hoy.getMonth() - fechaNacimientoDate.getMonth();
+
+
+                if (!nombre || !contrasenia || !fecha || !correo || !cel) {
+                    alert("Por favor, complete todos los campos del formulario.");
+                    return false;
+                } else
+                if (!sexo[0].checked && !sexo[1].checked && !sexo[2].checked) {
+                    alert("Por favor, seleccione una opción para el campo 'Sexo'.");
+                    return false;
+                } else
+                if (!contraseniaExpresion.test(contrasenia)) {
+                    alert("La contraseña debe tener al menos 8 caracteres, 1 número y 1 letra mayúscula.");
+                    return false;
+                } else
+                if (!correoExpresion.test(correo)) {
+                    alert("Por favor, ingrese un correo electrónico válido.");
+                    return false;
+                } else
+                if (!celExpresion.test(cel)) {
+                    alert("Por favor, ingrese un número de teléfono válido (10 dígitos).");
+                    return false;
+                } else
+                if (m < 0 || (m === 0 && hoy.getDate() < fechaNacimientoDate.getDate())) {
+                    edad--;
+                } else
+                if (edad < 13) {
+                    alert("Lo siento, debes tener al menos 13 años para registrarte en este sitio.");
+                    return false;
+                } else
+                if (!aceptar[0].checked) {
+                    alert("Lo sentimos, pero debes aceptar los términos y condiciones para hacer uso de esta aplicación ");
+                    return false;
+                } else
+                    return true;
+            }
+             $(document).ready(function () {
+                $("#openBtn").click(function () {
+                    $("#popup").fadeIn();
+                });
+
+                $("#closeBtn").click(function () {
+                    $("#popup").fadeOut();
+                });
+            });
+            
+            const overlay = document.getElementById('overlay');
+            const popup = document.getElementById('popup');
+            const closeBtn = document.getElementById('closeBtn');
+            
+            function openPopup() {
+                overlay.style.display = 'flex';
+                popup.style.display = 'block';
+            }
+            
+            function closePopup() {
+                overlay.style.display = 'none';
+                popup.style.display = 'none';
+            }
+            
+            closeBtn.addEventListener('click', closePopup);
+        </script>
+    </head>
+    <body>
+        <h1>Registro</h1>
+        <br>
+        <form action="altas.jsp" method="post" name="altas" onsubmit="return validarFormulario()">
+            <label for="nombre">Nombre:</label>
+            <input type="text" name="nombre" id="nombre">
+
+            <label for="contrasenia">Contraseña:</label>
+            <input type="password" name="contrasenia" id="contrasenia">
+
+            <label>Sexo:</label>
+            <div class="radio-buttons">
+                <input type="radio" name="sexo" id="sexo-hombre" value="Hombre">
+                <label for="sexo-hombre"><span class="checkmark"> </span> Masculino</label>
+                <input type="radio" name="sexo" id="sexo-mujer" value="Mujer">
+                <label for="sexo-mujer"><span class="checkmark"> </span> Mujer</label>
+                <input type="radio" name="sexo" id="sexo-otro" value="Otro">
+                <label for="sexo-otro"><span class="checkmark"> </span> Otro</label>
+            </div>
+
+            <label for="fecha">Fecha de Nacimiento:</label>
+            <input type="date" name="fecha" id="fecha">
+
+            <label for="correo">Correo electrónico:</label>
+            <input type="email" name="correo" id="correo">
+
+            <label for="cel">Teléfono celular:</label>
+            <input type="tel" name="cel" id="cel">
+
+            <input type="submit" name="alta" value="Alta">
+        </form>
+        <div class="overlay" id="overlay">
+            <div class="popup" id="popup">
+                <h4>Terminos y condiciones</h4>
+                <div class="contenedor-inputs">
+                    <p>1. Política de bienestar animal: La empresa se compromete a priorizar el bienestar
+                        animal por encima de cualquier otro interés. Se deben establecer estándares claros
+                        de bienestar para las mascotas y garantizar que todas las prácticas de reproducción
+                        sean seguras y éticas.
+                    </p>
+                    <p>2. Política de evaluación veterinaria: La empresa debe requerir que todas las
+                        mascotas que se reproduzcan a través del sitio web sean evaluadas previamente por un
+                        veterinario para garantizar que estén en buena salud y no tengan enfermedades
+                        genéticas o hereditarias.
+
+                    </p>
+                    <p>3. Política de control de la reproducción: La empresa debe trabajar con especialistas
+                        calificados para controlar la reproducción de las mascotas y garantizar que solo se
+                        realice de manera segura y responsable.
+
+                    </p>
+                    <p>4. Política de protección de datos: La empresa debe proteger la privacidad de los
+                        usuarios y garantizar que cualquier información personal proporcionada se utilice
+                        solo para los fines previstos.
+
+                    </p>
+                    <p>5. Política de comunicación responsable: La empresa debe fomentar una comunicación
+                        responsable entre los usuarios y garantizar que se sigan los protocolos adecuados
+                        para programar la reproducción de las mascotas.
+
+                    </p>
+                    <p>6. Política de responsabilidad: La empresa debe establecer un marco de
+                        responsabilidad claro y garantizar que los usuarios asuman la responsabilidad de
+                        cualquier resultado negativo de la reproducción de sus mascotas.
+
+                    </p>
+                    <p>7. Política de revisión de antecedentes: La empresa debe realizar una revisión de
+                        antecedentes de los usuarios para garantizar que sean responsables y adecuados para
+                        la reproducción de mascotas.
+
+                    </p>
+                    <p>8. Política de educación: La empresa debe proporcionar información y recursos
+                        educativos sobre la reproducción responsable de mascotas y la adopción de animales.
+
+                    </p>
+                    <p>9. Política de seguimiento: La empresa debe realizar un seguimiento de las mascotas
+                        que se reproducen a través del sitio web y garantizar que estén siendo atendidas
+                        adecuadamente.
+
+                    </p>
+                    <p>10. Política de sanciones: La empresa debe establecer sanciones claras y justas para
+                        los usuarios que no cumplan con las políticas de reproducción responsable.
+
+                    </p>
+                    <p>11. Política de privacidad: La empresa debe establecer políticas claras de privacidad
+                        y asegurarse de que cualquier información personal proporcionada por los usuarios se
+                        utilice solo para los fines previstos y no se comparta con terceros sin su
+                        consentimiento.
+
+                    </p>
+                    <p>12. Política de rescate de mascotas: La empresa debe establecer políticas claras para
+                        tratar a las mascotas que quedan sin hogar o abandonadas después de la reproducción.
+
+                    </p>
+                    <p>13. Política de adopción de mascotas: La empresa debe fomentar la adopción de
+                        mascotas a través del sitio web y proporcionar información sobre refugios y
+                        organizaciones de rescate de animales que ofrecen mascotas para adoptar.
+
+                    </p>
+                    <p>
+                        14. Política de cancelación de cuenta: La empresa debe establecer una política clara
+                        de cancelación de cuenta que permita a los usuarios cancelar su cuenta en cualquier
+                        momento y eliminar toda la información de reproducción de sus mascotas del sitio
+                        web.
+
+                    </p>
+
+                    <p>15. Política de atención al cliente: La empresa debe ofrecer una atención al cliente
+                        de alta calidad y estar disponible para responder preguntas y resolver problemas de
+                        manera oportuna y efectiva.
+
+                    </p>
+                    <p>16. Prohibición de la venta de animales: El sitio web no permitirá la venta de
+                        animales en ningún caso. El enfoque principal será la adopción responsable y la
+                        reproducción controlada, siempre teniendo en cuenta el bienestar de los animales.
+
+                    </p>
+                    <p>17. Política de rescate de animales: Siempre que sea posible, se trabajará en
+                        colaboración con organizaciones de rescate de animales para promover la adopción
+                        responsable y la protección de los animales.
+
+                    </p>
+                    <p>18. Conciencia de bienestar animal: El sitio web se compromete a promover el
+                        bienestar de los animales, fomentando la educación sobre su cuidado y las
+                        responsabilidades que implica ser propietario de una mascota.
+
+                    </p>
+                    <p>19. Política de no discriminación: El sitio web no permitirá la discriminación de
+                        ninguna mascota o usuario, independientemente de su raza, género, orientación
+                        sexual, edad o cualquier otra característica.
+
+                    </p>
+                    <p>20. Política de privacidad: El sitio web protegerá la privacidad de sus usuarios y no
+                        compartirá su información personal con terceros sin su consentimiento.
+
+                    </p>
+                    <p>21. Política de verificación de identidad: Para garantizar la seguridad de todos los
+                        usuarios del sitio web, se requerirá una verificación de identidad antes de permitir
+                        la publicación de perfiles de mascotas o usuarios que deseen utilizar el servicio de
+                        reproducción controlada.
+
+                    </p>
+                    <p>22. Política de adopción de crías: Si los dueños de las mascotas deciden ofrecer las
+                        crías en adopción, el sitio web permitirá la publicación de perfiles de adopción
+                        para cada cría. Estos perfiles incluirán información relevante, como edad, género,
+                        raza y cualquier otra información pertinente sobre la salud y el
+                        bienestar de la cría.
+                    </p>
+
+                </div>
+                <br>
+                <form onsubmit="return validarFormulario()">
+                    <div class="contenedor-checkbox">
+                        <div class="radio-buttons">
+                            <input type="radio" name="aceptar" id="terminos-aceptar" value="Si">
+                            <label for="terminos-aceptar"><span class="checkmark"></span> Sí</label>
+                            <input type="radio" name="aceptar" id="terminos-negar" value="No">
+                            <label for="terminos-negar"><span class="checkmark"></span> No</label>
+                        </div>
+                    </div>
+                    <br>
+                    <input type="submit" id='btn-cerrar-popup' class="btn-submit" value="Siguiente">
+                </form>
+                <button id="closeBtn">Cerrar</button>
+            </div>
+        </div>
+        <button id="openBtn">Abrir ventana emergente</button>
+    </body>
+</html>

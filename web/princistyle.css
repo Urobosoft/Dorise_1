@@ -1,0 +1,148 @@
+header {
+  font-weight: bold;
+  background-image: radial-gradient(circle at 77.73% 77.73%, #b06a8f 0, #945d82 12.5%, #754f6f 25%, #553e56 37.5%, #352a39 50%, #1a171c 62.5%, #000000 75%, #000000 87.5%, #000000 100%);
+  height: 0vh;
+  background-size: cover;
+  min-height: 80px;
+
+}
+h1{
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  text-align: center;
+
+}
+ul {
+  list-style-type: none;
+  justify-content: center;
+  align-items: flex-start;
+  margin-top: 20px;
+  margin-right: -10px;
+  color: #fff;
+}
+
+
+ul li {
+  display: inline-block;
+
+}
+
+ul li a {
+  text-decoration: none;
+  color: white;
+  padding: 5px 35px;
+  border: 0px solid transparent;
+  transition: 0.5s ease;
+
+}
+
+ul li a:hover {
+  background-color: #fff;
+  color: #000;
+}
+
+ul li.active a {
+  background-color: #fff;
+  color: #000;
+
+}
+
+.sub-menu {
+  font-weight: normal;
+  display: none;
+  top: 3%;
+}
+
+.sub-menu ul {
+  position: absolute;
+}
+
+.main ul li:hover .sub-menu {
+  display: flex;
+  position: absolute;
+  margin-top: 10px;
+  margin-left: -5px;
+}
+.main ul li:hover .sub-menu ul {
+  display: block;
+  margin: 6px;
+
+
+}
+
+.main ul li:hover .sub-menu ul li {
+  width: 300px;
+  padding: 5px;
+  border-bottom: 1px#fff;
+  background: white;
+  transition: 0.10s ease;
+  text-align: left;
+  border-radius: 10;
+
+}
+
+.main .sub-menu ul li a {
+  color: black;
+}
+
+.main ul li:hover .sub-menu ul li:last-child {
+  border-bottom: none;
+}
+
+/* Estilos generales de la tabla */
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th, td {
+  padding: 8px;
+  text-align: left;
+}
+
+th {
+  background-color: #f2f2f2;
+}
+
+table {
+  border: 1px solid #ccc;
+  font-family: Arial, sans-serif;
+}
+
+table th {
+  background-color: #b06a8f;
+  color: #fff;
+  font-weight: bold;
+}
+
+table td {
+  background-color: #fff;
+  color: #333;
+}
+
+table tr:nth-child(even) td {
+  background-color: #f2f2f2;
+}
+
+table tr:hover td {
+  background-color: darkmagenta;
+  color: #fff;
+}
+
+@media only screen and (min-width: 768px) {
+  header {
+    height: 80px;
+  }
+
+  ul {
+    margin-top: 0;
+  }
+}
+
+@media only screen and (max-width:767px) {
+  header {
+    height: auto;
+    padding: 10px;
+  }
+}
