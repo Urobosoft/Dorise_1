@@ -7,60 +7,37 @@
     </head>
     <body>
         <%@page import="java.sql.*, basesita.conexionsita"%>
-        <% 
+        <%
             HttpSession sesion = request.getSession();
             Object userIdObj = sesion.getAttribute("user_id");
+            int userid = Integer.parseInt(userIdObj.toString());
             Connection con = null;
             CallableStatement comandito = null;
-            ResultSet rs = null;
-
-            if (userIdObj != null) {
-                int userid = Integer.parseInt(userIdObj.toString());
-                conexionsita conecta = new conexionsita();
-                
-                try {
-                    con = conecta.conectar();
-                    String queryString = "call buscarCruza(?)";
-                    comandito = con.prepareCall(queryString);
-                    comandito.setInt(1, userid);
-                    rs = comandito.executeQuery();
+            conexionsita conecta = new conexionsita();
+            con = conecta.conectar();
+            String queryString = "call buscarCruza(?)";
+            comandito = con.prepareCall(queryString);
+            comandito.setInt(1, userid);
+            ResultSet rs = comandito.executeQuery();
+            while (rs.next()) {
+                String nombre = rs.getString("Nombre");
+                int edad = rs.getInt("Edad");
+                String especie = rs.getString("Especie");
+                String raza = rs.getString("Raza");
         %>
-        <table border="1">
+        <table>
             <tr>
-                <th>Nombre</th>
-                <th>Edad</th>
-                <th>Especie</th>
-                <th>Raza</th>
+                <td><%= rs.getString("Nombre")%></td>
+                <td><%= rs.getString("Edad")%></td>
+                <td><%= rs.getString("Especie")%></td>
+                <td><%= rs.getString("Raza")%></td>
             </tr>
-        <% 
-                    while (rs.next()) {
-        %>
-            <tr>
-                <td><%= rs.getString("Nombre") %></td>
-                <td><%= rs.getInt("Edad") %></td>
-                <td><%= rs.getString("Especie") %></td>
-                <td><%= rs.getString("Raza") %></td>
-            </tr>
-        <% 
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-        %>
-            <tr>
-                <td colspan="4">Error al recuperar los datos: <%= e.getMessage() %></td>
-            </tr>
-        </table>
-        <%
-                } finally {
-                    if (rs != null) try { rs.close(); } catch (SQLException e) { e.printStackTrace(); }
-                    if (comandito != null) try { comandito.close(); } catch (SQLException e) { e.printStackTrace(); }
-                    if (con != null) try { con.close(); } catch (SQLException e) { e.printStackTrace(); }
+            <%
                 }
-            } else {
-        %>
-                <p>No hay sesión de usuario activa.</p>
-        <%
-            }
-        %>
+                con.close();
+                comandito.close();
+                rs.close();
+            %>
+        </table>
     </body>
 </html>
