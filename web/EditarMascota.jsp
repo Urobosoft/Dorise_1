@@ -20,65 +20,42 @@
                     finP.value = "";
                 }
             }
-            function validarEdad() {
-                var nombre = document.getElementById("nom").value;
-                var edad = document.getElementById("edad").value;
-                var inicioP = document.getElementById("InicioP").value;
-                var finP = document.getElementById("FinP").value;
-                var especie = document.getElementById("especie").value;
-                var sexo = document.querySelector('input[name="sexo"]:checked');
-                var diffTime = Math.abs(new Date(finP) - new Date(inicioP));
-                var diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-
-                if (nombre === "") {
-                    alert("Por favor, ingrese un nombre.");
+            function validarEdad(){
+                var edad = document.getElementById("edad").value.trim();
+                var sexo = document.getElementById("sexo").value.trim();
+                var especie = document.getElementById("especie").value.trim();
+                if(isNaN(sexo)){
+                    alert("La edad debe ser un número");
                     return false;
-                } else if (edad === "") {
-                    alert("Por favor, seleccione la edad.");
-                    return false;
-                } else if (isNaN(edad)) {
-                    alert("La edad debe ser un número.");
-                    return false;
-                } else if (especie === "") {
-                    alert("Por favor, seleccione una especie.");
-                    return false;
-                } else if (!sexo) {
-                    alert("Por favor, seleccione un sexo.");
-                    return false;
-                } else if (sexo.value === "Hembra") {
-                    if (inicioP === "") {
-                        alert("Por favor, seleccione la fecha de inicio del periodo reproductivo.");
-                        return false;
-                    } else if (finP === "") {
-                        alert("Por favor, seleccione la fecha de fin del periodo reproductivo.");
-                        return false;
-                    } else if (diffDays < 14 || diffDays > 28) {
-                        alert("La diferencia entre la fecha de inicio y la fecha de fin del periodo reproductivo debe ser de entre 2 y 4 semanas.");
-                        return false;
-                    } else {
-                        return true;
-                    }
-                } else {
-                    if (especie === "Perro") {
-                        if (sexo.value === "Macho") {
-                            if (edad > 8 || edad < 1) {
-                                alert("La edad debe ser de mínimo 1 año y máximo 8.");
-                                return false;
-                            } else {
-                                return true;
-                            }
-                        } else {
-                            if (edad > 7 || edad < 1) {
-                                alert("La edad debe ser de mínimo 1 año y máximo 7.");
-                                return false;
-                            } else {
-                                return true;
-                            }
-                        }
-                    } else {
-                        return true;
-                    }
                 }
+                else{
+                if(especie === "Perro"){
+                    if(sexo === "Macho"){
+                        if(edad > 8 || edad < 1){
+                            alert("La edad debe ser de mínimo 1 año y máximo 8");
+                            return false;
+                        }else
+                            return true;
+                    }else
+                         if(edad > 7 || edad < 1){
+                            alert("La edad debe ser de mínimo 1 año y máximo 7");
+                            return false;
+                        }else
+                            return true;
+                    }else
+                    if(sexo === "Macho"){
+                        if(edad > 7 || edad < 1){
+                            alert("La edad debe ser de mínimo 1 año y máximo 7");
+                            return false;
+                        }else
+                            return true;
+                    }else
+                         if(edad > 6 || edad < 1){
+                            alert("La edad debe ser de mínimo 1 año y máximo 6");
+                            return false;
+                        }else
+                            return true;
+                    }
             }
             function desactivarPeriodo() {
                 var sexo = document.querySelector('input[name="sexo"]:checked').value;
@@ -96,7 +73,6 @@
     </head>
     <body onload="desactivarPeriodo()">
         <%
-            HttpSession sesion = request.getSession();
             int mascotaid = Integer.parseInt(request.getParameter("idMascota"));
             Connection con = null;
             CallableStatement comandito = null;
@@ -109,15 +85,11 @@
             while (rs.next()) {
         %>
         <div class="tabla-mascotas">
-            <form action="EditMascota.jsp" onsubmit="return validarEdad()">
+            <form onsubmit="return validarEdad()">
                 <table border="1" width="250" align="center">
                     <tr>
-                        <td>Id:</td>
-                        <td><input type="text" name="idMas" id="idMas" value="<%=rs.getString(1)%>" hidden=""></td>
-                    </tr>
-                    <tr>
                         <td>Nombre:</td>
-                        <td><input type="text" name="nom" id="nom" value="<%=rs.getString(2)%>"></td>
+                        <td><input type="text" name="nom" value="<%=rs.getString(2)%>"></td>
                     </tr>
                     <tr>
                         <td>Edad:</td>
@@ -131,10 +103,10 @@
                         <td>Sexo:</td>
                         <td>
                             <label><input type="radio" name="sexo" id="sexo" value="Macho" <% if ("Macho".equals(rs.getString(8))) {
-                                    out.print("checked");
-                                } %> onchange="activarPeriodo()"> Macho</label>
-                                          <label><input type="radio" name="sexo" id="sexo" value="Hembra" <% if ("Hembra".equals(rs.getString(8)))
-                                                  out.print("checked");%> onchange="activarPeriodo()"> Hembra</label>
+                            out.print("checked");
+                        } %> onchange="activarPeriodo()"> Macho</label>
+                            <label><input type="radio" name="sexo" id="sexo" value="Hembra" <% if ("Hembra".equals(rs.getString(8)))
+                            out.print("checked");%> onchange="activarPeriodo()"> Hembra</label>
                         </td>
                     </tr>
                     <tr>
@@ -146,8 +118,8 @@
                         <td><input type="date" name="FinP" id="FinP" value="<%=rs.getString(5)%>"></td>
                     </tr>
                     <th colspan="2">
-                        <input type="submit" name="btngrabar" value="Editar Mascota">
-                    </th>
+                    <input type="submit" name="btngrabar" value="EditarUsuario">
+                </th>
                 </table>
             </form>
         </div>

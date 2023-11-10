@@ -1,3 +1,4 @@
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -5,7 +6,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="RegistroM.css">
-        <script>
+        <script type="text/javascript">
             function validarFormulario() {
                 var nombre = document.getElementById("nombre").value;
                 var edad = document.getElementById("edad").value;
@@ -14,44 +15,42 @@
                 var especie = document.getElementById("especie").value;
                 var raza = document.getElementById("raza").value;
                 var sexo = document.querySelector('input[name="sexo"]:checked');
-                var diffTime = Math.abs(new Date(finP) - new Date(inicioP));
-                var diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
                 if (nombre === "") {
                     alert("Por favor, ingrese un nombre.");
                     return false;
-                } else if (edad === "") {
+                } else
+                if (edad === "") {
                     alert("Por favor, seleccione la edad.");
                     return false;
-                } else if (especie === "") {
+                } else
+                if (especie === "") {
                     alert("Por favor, seleccione una especie.");
-                    return false;
-                } else if (raza === "") {
+                    return false;   
+                } else
+                if (raza === "") {
                     alert("Por favor, seleccione una raza.");
                     return false;
-                } else if (!sexo) {
+                } else
+                if (!sexo) {
                     alert("Por favor, seleccione un sexo.");
                     return false;
-                } else if (sexo.value === "Hembra") {
+                } else
+                if (sexo === "Hembra") {
                     if (inicioP === "") {
                         alert("Por favor, seleccione la fecha de inicio del periodo reproductivo.");
                         return false;
-                    } else if (finP === "") {
+                    } else
+                    if (finP === "") {
                         alert("Por favor, seleccione la fecha de fin del periodo reproductivo.");
                         return false;
-                    } else if (diffDays < 14 || diffDays > 28) {
-                        alert("La diferencia entre la fecha de inicio y la fecha de fin del periodo reproductivo debe ser de entre 2 y 4 semanas.");
-                        return false;
-                    } else {
+                    } else
                         return true;
-                    }
-                } else {
-                    return true;
                 }
             }
             function cargarRazas() {
                 var especie = document.getElementById("especie").value;
                 var selectRaza = document.getElementById("raza");
-                selectRaza.innerHTML = "";
+                selectRaza.innerHTML = ""; // Limpiar el combo de raza
                 if (especie === "Perro") {
                     var razasPerro = [
                         "American Pit Bull Terrier",
@@ -101,47 +100,6 @@
                     }
                 }
             }
-            function obtenerEdades() {
-                var especie = document.getElementById("especie").value;
-                var sexo = document.querySelector('input[name="sexo"]:checked').value;
-                var selectEdad = document.getElementById("edad");
-                selectEdad.innerHTML = ""; 
-                var edades = [];
-                if (especie === "Perro") {
-                    if (sexo === "Macho") {
-                        for (var i = 1; i <= 8; i++) {
-                            var option = document.createElement("option"); 
-                            option.value = i; 
-                            option.text = i + " años"; 
-                            selectEdad.appendChild(option); 
-                        }
-                    } else if (sexo === "Hembra") {
-                        for (var i = 1; i <= 7; i++) {
-                            var option = document.createElement("option");
-                            option.value = i;
-                            option.text = i + " años";
-                            selectEdad.appendChild(option);
-                        }
-                    }
-                } else if (especie === "Gato") {
-                    if (sexo === "Macho") {
-                        for (var i = 1; i <= 7; i++) {
-                            var option = document.createElement("option");
-                            option.value = i;
-                            option.text = i + " años";
-                            selectEdad.appendChild(option);
-                        }
-                    } else if (sexo === "Hembra") {
-                        for (var i = 1; i <= 6; i++) { 
-                            var option = document.createElement("option");
-                            option.value = i;
-                            option.text = i + " años";
-                            selectEdad.appendChild(option);
-                        }
-                    }
-                }
-                return edades;
-            }
             function activarPeriodo() {
                 var selectedValue = document.querySelector('input[name="sexo"]:checked').value;
                 if (selectedValue === "Hembra") {
@@ -154,12 +112,6 @@
                     FinP.value = "";
                 }
             }
-            function cambios() {
-                cargarRazas();
-                obtenerEdades();
-                activarPeriodo();
-                
-            }
         </script>
     </head>
     <body>
@@ -167,11 +119,26 @@
         <form name="registroAnimal" method="post" action="RegistroM.jsp" onsubmit="return validarFormulario();">
             <label for="nombre">Nombre:</label>
             <input type="text" name="nombre" id="nombre"><br><br>
+            <label for="edad">Edad:</label>
+            <select name="edad" id="edad">
+                <option value="">Seleccione la edad</option>
+                <option value="1">1 año</option>
+                <option value="2">2 años</option>
+                <option value="3">3 años</option>
+                <option value="4">4 años</option>
+                <option value="5">5 años</option>
+                <option value="6">6 años</option>
+                <option value="7">7 años</option>
+                <option value="8">8 años</option>
+                <option value="9">9 años</option>
+                <option value="10">10 años</option>
+            </select>
+            <br><br>
             <label>Sexo:</label>
             <div class="radio-buttons">
-                <input type="radio" name="sexo" id="sexo-macho" value="Macho" onchange="cambios()">
+                <input type="radio" name="sexo" id="sexo-macho" value="Macho" onchange="activarPeriodo()">
                 <label for="sexo-macho"><span class="checkmark"> </span> Macho</label>
-                <input type="radio" name="sexo" id="sexo-hembra" value="Hembra" onchange="cambios()">
+                <input type="radio" name="sexo" id="sexo-hembra" value="Hembra" onchange="activarPeriodo()">
                 <label for="sexo-hembra"><span class="checkmark"> </span> Hembra</label>
             </div>
             <br><br>
@@ -182,7 +149,7 @@
             <input type="date" name="FinP" id="FinP" disabled="">
             <br><br>
             <label for="especie">Especie:</label>
-            <select name="especie" id="especie" onchange="cambios()">
+            <select name="especie" id="especie" onchange="cargarRazas()">
                 <option value="">Seleccione una opción</option>
                 <option value="Perro">Perro</option>
                 <option value="Gato">Gato</option>
@@ -191,11 +158,10 @@
             <label for="raza">Raza:</label>
             <select name="raza" id="raza"></select>
             <br><br>
-            <label for="edad">Edad:</label>
-            <select name="edad" id="edad"></select>
+            <label>Id del dueño:</label>
+            <input type="text" name="idUsuario" value="<%= session.getAttribute("user_id")%>" disabled="">
             <br><br>
             <input type="submit" value="Registrar">
         </form>
-        <button><a href="Principal.html">Regresar</a></button>
     </body>
 </html>
